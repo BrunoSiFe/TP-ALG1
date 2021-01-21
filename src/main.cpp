@@ -168,6 +168,49 @@ void resposta(std::vector<int> vetorPostosAlcancaveis)
     }
 }
 
+bool isCyclicUtil(int posicao, bool postosVisitados[], bool *recStack, std::vector<std::vector<int>> listaAdjacencia)
+{
+
+    if (posicao == 0)
+    {
+        return false;
+    }
+    if (postosVisitados[posicao] == false)
+    {
+        postosVisitados[posicao] = true;
+        recStack[posicao] = true;
+
+        std::vector<int>::iterator i;
+        for (i = listaAdjacencia[posicao].begin(); i != listaAdjacencia[posicao].end(); ++i)
+        {
+            if (!postosVisitados[*i] && isCyclicUtil(*i, postosVisitados, recStack, listaAdjacencia))
+                return true;
+            else if (recStack[*i])
+                return true;
+        }
+    }
+    recStack[posicao] = false;
+    return false;
+}
+
+bool isCyclic(int quantidadePostosSaude, std::vector<std::vector<int>> listaAdjacencia)
+{
+    bool *visited = new bool[quantidadePostosSaude];
+    bool *recStack = new bool[quantidadePostosSaude];
+
+    for (int i = 0; i < quantidadePostosSaude; i++)
+    {
+        visited[i] = false;
+        recStack[i] = false;
+    }
+
+    for (int i = 0; i < quantidadePostosSaude; i++)
+        if (isCyclicUtil(i, visited, recStack, listaAdjacencia))
+            return true;
+
+    return false;
+}
+
 int main()
 {
 
@@ -212,17 +255,21 @@ int main()
 
     std::vector<int> elementosVisitados = gerarVectorVazio(listaAdjacencia.size());
 
-    vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
-
-    for (long unsigned int i = 0; i < vetorPostosAlcancaveis.size(); i++)
+    if (numeroMaximoPostosAlcancaveis>1)
     {
+        vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
 
-        elementosVisitados[vetorPostosAlcancaveis[i]] = 2;
+        for (long unsigned int i = 0; i < vetorPostosAlcancaveis.size(); i++)
+        {
+
+            elementosVisitados[vetorPostosAlcancaveis[i]] = 2;
+        }
+
+        vetorPostosAlcancaveis = gerarPostosAlcancaveis(vetorPostosAlcancaveis, elementosVisitados, listaAdjacencia, numeroMaximoPostosAlcancaveis);
     }
 
-    vetorPostosAlcancaveis = gerarPostosAlcancaveis(vetorPostosAlcancaveis, elementosVisitados, listaAdjacencia, numeroMaximoPostosAlcancaveis);
-
     resposta(vetorPostosAlcancaveis);
+    std::cout << isCyclic(quantidadePostosSaude, listaAdjacencia) << std::endl;
 
     return 0;
 }
