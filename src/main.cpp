@@ -4,6 +4,7 @@
 #include <sstream>
 #include <queue>
 #include <algorithm>
+#include <stack>
 
 #include "headers/interface/centroDistribuicao.hpp"
 #include "headers/interface/postoSaude.hpp"
@@ -145,6 +146,31 @@ std::vector<int> gerarPostosAlcancaveis(std::vector<int> vetorPostosAlcancaveis,
     return vetorPostosAlcancaveis;
 }
 
+std::vector<int> dfs(std::vector<PostoSaude *> vetorPostoSaude, std::vector<std::vector<int>> listaAdjacencia, std::vector<int> elementosVisitados)
+{
+
+    std::stack<int> elementos;
+
+    elementos.push(vetorPostoSaude[1]->getId());
+
+    while (!elementos.empty())
+    {
+        int posicao = elementos.top();
+        elementos.pop();
+        if(elementosVisitados[posicao]==0){
+            elementosVisitados[posicao] = 1;
+            for(long unsigned int i=0;i<listaAdjacencia[posicao].size();i++){
+                elementos.push(listaAdjacencia[posicao][i]);
+            }
+        }else if(elementosVisitados[posicao]==1){
+            elementosVisitados[posicao] = 2;
+        }
+        
+    };
+
+    return elementosVisitados;
+}
+
 void resposta(std::vector<int> vetorPostosAlcancaveis)
 {
     std::cout << vetorPostosAlcancaveis.size() << std::endl;
@@ -166,49 +192,6 @@ void resposta(std::vector<int> vetorPostosAlcancaveis)
     {
         std::cout << "*" << std::endl;
     }
-}
-
-bool isCyclicUtil(int posicao, bool postosVisitados[], bool *recStack, std::vector<std::vector<int>> listaAdjacencia)
-{
-
-    if (posicao == 0)
-    {
-        return false;
-    }
-    if (postosVisitados[posicao] == false)
-    {
-        postosVisitados[posicao] = true;
-        recStack[posicao] = true;
-
-        std::vector<int>::iterator i;
-        for (i = listaAdjacencia[posicao].begin(); i != listaAdjacencia[posicao].end(); ++i)
-        {
-            if (!postosVisitados[*i] && isCyclicUtil(*i, postosVisitados, recStack, listaAdjacencia))
-                return true;
-            else if (recStack[*i])
-                return true;
-        }
-    }
-    recStack[posicao] = false;
-    return false;
-}
-
-bool isCyclic(int quantidadePostosSaude, std::vector<std::vector<int>> listaAdjacencia)
-{
-    bool *visited = new bool[quantidadePostosSaude];
-    bool *recStack = new bool[quantidadePostosSaude];
-
-    for (int i = 0; i < quantidadePostosSaude; i++)
-    {
-        visited[i] = false;
-        recStack[i] = false;
-    }
-
-    for (int i = 0; i < quantidadePostosSaude; i++)
-        if (isCyclicUtil(i, visited, recStack, listaAdjacencia))
-            return true;
-
-    return false;
 }
 
 int main()
@@ -259,7 +242,7 @@ int main()
     {
         vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
     }
-    else if (numeroMaximoPostosAlcancaveis>1)
+    else if (numeroMaximoPostosAlcancaveis > 1)
     {
 
         vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
@@ -274,7 +257,23 @@ int main()
     }
 
     resposta(vetorPostosAlcancaveis);
-    std::cout << isCyclic(quantidadePostosSaude, listaAdjacencia) << std::endl;
+
+    elementosVisitados = gerarVectorVazio(listaAdjacencia.size());
+
+    elementosVisitados = dfs(vetorPostoSaude,listaAdjacencia,elementosVisitados);
+    bool rotaDupla = false;
+
+    for(long unsigned int i=0;i<elementosVisitados.size();i++){
+        if(elementosVisitados[i]==2){
+            rotaDupla = true;
+        }
+    }
+
+    if(rotaDupla){
+        std::cout << "1";
+    }else{
+        std::cout << "0";
+    }
 
     return 0;
 }
