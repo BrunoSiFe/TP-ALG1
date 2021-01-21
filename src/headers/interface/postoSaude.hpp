@@ -1,25 +1,29 @@
 #ifndef TP_POSTOSAUDE
 #define TP_POSTOSAUDE
 
-namespace TP{
-    class PostoSaude{
+#include <vector>
 
-        private:
+namespace TP
+{
+    class PostoSaude
+    {
 
-            int id;
-            bool visitado;
+    private:
+        int id;
+        int visitado;
+        std::vector<PostoSaude *> postosAdjacentes;
 
-        public:
+    public:
+        PostoSaude();
+        PostoSaude(int id, int visitado);
 
-            PostoSaude();
-            PostoSaude(int id, bool visitado);
+        int getId();
+        int getVisitado();
+        std::vector<PostoSaude*> getPostosAdjacentes();
 
-            int getId();
-            bool getVisitado();
-
-            void setVisitado(bool visitado);
-            void setId(int id);
-
+        void setVisitado(int visitado);
+        void setId(int id);
+        void setPostosAdjacentes(std::vector<PostoSaude*> postosAdjacentes);
     };
 }
 

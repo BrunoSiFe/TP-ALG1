@@ -3,27 +3,26 @@
 
 #include <vector>
 
-namespace TP{
-    class CentroDistribuicao{
+namespace TP
+{
+    class CentroDistribuicao
+    {
 
-        private:
+    private:
+        int id;
+        std::vector<int> postosAdjacentes;
 
-            int id;
-            std::vector<int>  postosAdjacentes;
+    public:
+        CentroDistribuicao();
+        CentroDistribuicao(int id);
+        CentroDistribuicao(int id, std::vector<int> postosAdjacentes);
 
-        public:
+        int getId();
+        std::vector<int> getPostosAdjacentes();
 
-            CentroDistribuicao();
-            CentroDistribuicao(int id);
-            CentroDistribuicao(int id,std::vector<int> postosAdjacentes);
-
-            int getId();
-            std::vector<int> getPostosAdjacentes();
-
-            void setId(int id);
-            void setPostosAdjacentes(std::vector<int> postosAdjacentes);
-
+        void setId(int id);
+        void setPostosAdjacentes(std::vector<int> postosAdjacentes);
     };
-}
+} 
 
 #endif

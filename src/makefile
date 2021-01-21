@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-Wall -Wextra -g
-EXEC=./tp1
-TMPOUT=tp1.testresult
+EXEC=./tp01
+TMPOUT=tp01.testresult
 
 $(EXEC): main.cpp pilha.o centroDistribuicao.o postoSaude.o
 	$(CC) $(CFLAGS) main.cpp pilha.o centroDistribuicao.o postoSaude.o -o $(EXEC)

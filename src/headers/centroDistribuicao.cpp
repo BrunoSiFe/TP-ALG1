@@ -2,23 +2,37 @@
 
 using namespace TP;
 
-CentroDistribuicao::CentroDistribuicao() : CentroDistribuicao(0){
-
+CentroDistribuicao::CentroDistribuicao() : CentroDistribuicao(0)
+{
 }
 
-CentroDistribuicao::CentroDistribuicao(int id){
+CentroDistribuicao::CentroDistribuicao(int id)
+{
     this->id = id;
 }
 
-CentroDistribuicao::CentroDistribuicao(int id,std::vector<int> postosAdjacentes){
+CentroDistribuicao::CentroDistribuicao(int id, std::vector<int> postosAdjacentes)
+{
     this->id = id;
     this->postosAdjacentes = postosAdjacentes;
 }
 
-int CentroDistribuicao::getId(){
+int CentroDistribuicao::getId()
+{
     return this->id;
 }
 
-void CentroDistribuicao::setId(int id){
+std::vector<int> CentroDistribuicao::getPostosAdjacentes()
+{
+    return this->postosAdjacentes;
+}
+
+void CentroDistribuicao::setId(int id)
+{
     this->id = id;
+}
+
+void CentroDistribuicao::setPostosAdjacentes(std::vector<int> postosAdjacentes)
+{
+    this->postosAdjacentes = postosAdjacentes;
 }

@@ -1,33 +1,32 @@
 #ifndef TP_PILHA
 #define TP_PILHA
 
-#include "postosSaude.hpp"
+#include "postoSaude.hpp"
 
-namespace TP{
+namespace TP
+{
 
-    class Pilha{
+    class Pilha
+    {
 
-        private:
+    private:
+        PostoSaude *primeiroNo;
+        PostoSaude *ultimoNo;
 
-            PostoSaude* primeiroNo;
-            PostoSaude* ultimoNo;
+    public:
+        Pilha();
+        Pilha(PostoSaude *primeiroNo, PostoSaude *ultimoNo);
 
-        public:
+        PostoSaude *getPrimeiroNo();
+        PostoSaude *getUltimoNo();
 
-            Pilha();
-            Pilha(PostoSaude* primeiroNo,PostoSaude* ultimoNo);
+        void setPrimeiroNo(PostoSaude *primeiroNo);
+        void setUltimoNo(PostoSaude *ultimoNo);
 
-            PostoSaude* getPrimeiroNo();
-            PostoSaude* getUltimoNo();
+        PostoSaude *retirarPilha();
 
-            void setPrimeiroNo(PostoSaude* primeiroNo);
-            void setUltimoNo(PostoSaude* ultimoNo);
-
-            PostoSaude* retirarPilha();
-
-            void empilha(PostoSaude* no);
-
+        void empilha(PostoSaude *no);
     };
-}
+} 
 
 #endif

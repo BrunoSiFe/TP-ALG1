@@ -2,27 +2,32 @@
 
 using namespace TP;
 
-Pilha::Pilha() : Pilha(new PostoSaude(),new PostoSaude()){
-
+Pilha::Pilha() : Pilha(new PostoSaude(), new PostoSaude())
+{
 }
 
-Pilha::Pilha(PostoSaude* primeiroNo,PostoSaude* ultimoNo){
+Pilha::Pilha(PostoSaude *primeiroNo, PostoSaude *ultimoNo)
+{
     this->primeiroNo = primeiroNo;
     this->ultimoNo = ultimoNo;
 }
 
-PostoSaude* Pilha::getUltimoNo(){
+PostoSaude *Pilha::getUltimoNo()
+{
     return this->ultimoNo;
 }
 
-PostoSaude* Pilha::getPrimeiroNo(){
+PostoSaude *Pilha::getPrimeiroNo()
+{
     return this->primeiroNo;
 }
 
-void Pilha::setPrimeiroNo(PostoSaude* primeiroNo){
+void Pilha::setPrimeiroNo(PostoSaude *primeiroNo)
+{
     this->primeiroNo = primeiroNo;
 }
 
-void Pilha::setUltimoNo(PostoSaude* ultimoNo){
+void Pilha::setUltimoNo(PostoSaude *ultimoNo)
+{
     this->ultimoNo = ultimoNo;
 }
