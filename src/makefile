@@ -3,11 +3,8 @@ CFLAGS=-Wall -Wextra -g
 EXEC=./tp01
 TMPOUT=tp01.testresult
 
-$(EXEC): main.cpp pilha.o centroDistribuicao.o postoSaude.o
-	$(CC) $(CFLAGS) main.cpp pilha.o centroDistribuicao.o postoSaude.o -o $(EXEC)
-
-pilha.o: headers/pilha.cpp
-	$(CC) $(CFLAGS) -c headers/pilha.cpp -o pilha.o
+$(EXEC): main.cpp centroDistribuicao.o postoSaude.o
+	$(CC) $(CFLAGS) main.cpp centroDistribuicao.o postoSaude.o -o $(EXEC)
 
 centroDistribuicao.o: headers/centroDistribuicao.cpp
 	$(CC) $(CFLAGS) -c headers/centroDistribuicao.cpp -o centroDistribuicao.o
@@ -19,6 +16,5 @@ test: $(EXEC)
 	@bash run_test.sh $(EXEC) $(TMPOUT)
 
 clean: 
-	rm -rf pilha.o
 	rm -rf postoSaude.o
 	rm -rf centroDistribuicao.o

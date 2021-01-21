@@ -22,11 +22,6 @@ int PostoSaude::getId()
     return this->id;
 }
 
-std::vector<PostoSaude*> PostoSaude::getPostosAdjacentes()
-{
-    return this->postosAdjacentes;
-}
-
 void PostoSaude::setId(int id)
 {
     this->id = id;
@@ -35,9 +30,4 @@ void PostoSaude::setId(int id)
 void PostoSaude::setVisitado(int visitado)
 {
     this->visitado = visitado;
-}
-
-void PostoSaude::setPostosAdjacentes(std::vector<PostoSaude*> postosAdjacentes)
-{
-    this->postosAdjacentes = postosAdjacentes;
 }
