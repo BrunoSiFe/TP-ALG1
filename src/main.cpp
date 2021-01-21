@@ -108,10 +108,10 @@ std::vector<int> gerarPostosAlcancaveisPosPrimeiraProfundidade(std::vector<int> 
         {
 
             int postoAuxiliar = filaPrincipal.front();
+            filaPrincipal.pop();
 
             if (postoAuxiliar != 0)
             {
-                filaPrincipal.pop();
 
                 if (!elementosVisitados[postoAuxiliar] || elementosVisitados[postoAuxiliar] == 2)
                 {
@@ -221,6 +221,8 @@ int main()
     }
 
     vetorPostosAlcancaveis = gerarPostosAlcancaveis(vetorPostosAlcancaveis, elementosVisitados, listaAdjacencia, numeroMaximoPostosAlcancaveis);
+
+    resposta(vetorPostosAlcancaveis);
 
     return 0;
 }
