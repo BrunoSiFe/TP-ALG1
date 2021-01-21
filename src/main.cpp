@@ -255,8 +255,13 @@ int main()
 
     std::vector<int> elementosVisitados = gerarVectorVazio(listaAdjacencia.size());
 
-    if (numeroMaximoPostosAlcancaveis>1)
+    if (numeroMaximoPostosAlcancaveis == 1)
     {
+        vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
+    }
+    else if (numeroMaximoPostosAlcancaveis>1)
+    {
+
         vetorPostosAlcancaveis = postosAlcancaveisCentroDistribuicao(vetorPostosAlcancaveis, vetorPostoSaude, vetorCentroDistribuicao);
 
         for (long unsigned int i = 0; i < vetorPostosAlcancaveis.size(); i++)
