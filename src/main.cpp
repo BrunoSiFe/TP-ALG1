@@ -146,29 +146,76 @@ std::vector<int> gerarPostosAlcancaveis(std::vector<int> vetorPostosAlcancaveis,
     return vetorPostosAlcancaveis;
 }
 
-std::vector<int> dfs(std::vector<PostoSaude *> vetorPostoSaude, std::vector<std::vector<int>> listaAdjacencia, std::vector<int> elementosVisitados)
+bool avaliarApenasFalsos(std::vector<bool> avaliarNecessidadeDiminuirAuxiliar)
+{
+    bool aux = false;
+
+    for (long unsigned int i = 0; i < avaliarNecessidadeDiminuirAuxiliar.size(); i++)
+    {
+        if (avaliarNecessidadeDiminuirAuxiliar[i] == true)
+        {
+            aux = true;
+        }
+    }
+
+    return aux;
+}
+
+bool dfs(std::vector<CentroDistribuicao *> vetorCentroDistribuicao,
+         std::vector<std::vector<int>> listaAdjacencia, std::vector<int> elementosVisitados)
 {
 
-    std::stack<int> elementos;
-
-    elementos.push(vetorPostoSaude[1]->getId());
-
-    while (!elementos.empty())
+    
+    for (long unsigned int j = 0; j < vetorCentroDistribuicao.size(); j++)
     {
-        int posicao = elementos.top();
-        elementos.pop();
-        if(elementosVisitados[posicao]==0){
-            elementosVisitados[posicao] = 1;
-            for(long unsigned int i=0;i<listaAdjacencia[posicao].size();i++){
-                elementos.push(listaAdjacencia[posicao][i]);
-            }
-        }else if(elementosVisitados[posicao]==1){
-            elementosVisitados[posicao] = 2;
-        }
-        
-    };
 
-    return elementosVisitados;
+        std::stack<int> elementos;
+
+        for (long unsigned int k = 0; k < vetorCentroDistribuicao[j]->getPostosAdjacentes().size(); k++)
+        {
+
+            elementos.push(vetorCentroDistribuicao[j]->getPostosAdjacentes()[k]);
+        }
+
+        long unsigned int tamanhoOriginal = elementos.size();
+
+        while (!elementos.empty())
+        {
+
+            int posicao = elementos.top();
+            elementos.pop();
+
+            std::vector<bool> avaliarNecessidadeDiminuirAuxiliar;
+            if (elementosVisitados[posicao] == 0)
+            {
+                elementosVisitados[posicao] = 1;
+                for (long unsigned int i = 0; i < listaAdjacencia[posicao].size(); i++)
+                {
+                    if (listaAdjacencia[posicao][i] != 0)
+                    {
+
+                        elementos.push(listaAdjacencia[posicao][i]);
+                        avaliarNecessidadeDiminuirAuxiliar.push_back(true);
+                    }
+                    else if (listaAdjacencia[posicao][i] == 0)
+                    {
+                        avaliarNecessidadeDiminuirAuxiliar.push_back(false);
+                    }
+                }
+            }
+            else if (elementosVisitados[posicao] == 1 && posicao != 0)
+            {
+                return true;
+            }
+
+            if (!avaliarApenasFalsos(avaliarNecessidadeDiminuirAuxiliar) && elementosVisitados.size() > tamanhoOriginal)
+            {
+                elementosVisitados = gerarVectorVazio(elementosVisitados.size());
+            }
+        };
+    }
+
+    return false;
 }
 
 void resposta(std::vector<int> vetorPostosAlcancaveis)
@@ -260,18 +307,12 @@ int main()
 
     elementosVisitados = gerarVectorVazio(listaAdjacencia.size());
 
-    elementosVisitados = dfs(vetorPostoSaude,listaAdjacencia,elementosVisitados);
-    bool rotaDupla = false;
-
-    for(long unsigned int i=0;i<elementosVisitados.size();i++){
-        if(elementosVisitados[i]==2){
-            rotaDupla = true;
-        }
-    }
-
-    if(rotaDupla){
+    if (dfs(vetorCentroDistribuicao, listaAdjacencia, elementosVisitados))
+    {
         std::cout << "1";
-    }else{
+    }
+    else
+    {
         std::cout << "0";
     }
 
