@@ -208,9 +208,10 @@ bool dfs(std::vector<CentroDistribuicao *> vetorCentroDistribuicao,
                 return true;
             }
 
-            if (!avaliarApenasFalsos(avaliarNecessidadeDiminuirAuxiliar) && elementosVisitados.size() > tamanhoOriginal)
+            if (!avaliarApenasFalsos(avaliarNecessidadeDiminuirAuxiliar) && elementos.size() < tamanhoOriginal)
             {
                 elementosVisitados = gerarVectorVazio(elementosVisitados.size());
+                tamanhoOriginal--;
             }
         };
     }
