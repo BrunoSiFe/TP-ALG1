@@ -353,5 +353,3 @@ MigrationBackup/
 src/*.o
 
 src/tp01.*
-
-src/tests
